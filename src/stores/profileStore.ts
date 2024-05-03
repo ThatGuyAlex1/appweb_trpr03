@@ -1,11 +1,14 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { userService } from '../services/userService'
+import { teacherService } from '../services/teacherService'
+import { studentService } from '../services/studentService'
 import { useAuthStore } from './authStore'
 
 export const useProfileStore = defineStore('profileStoreId', () => {
   const email = ref('')
   const name = ref('')
+  const role = ref('')
   const onError = ref(false)
 
   function _initializeProfile(profile: { email: string; name: string }) {
@@ -18,7 +21,14 @@ export const useProfileStore = defineStore('profileStoreId', () => {
     try {
       onError.value = false
       const authStore = useAuthStore()
-      const userId = authStore.getUserId // Assuming getUserId is a computed or a ref inside authStore
+      const userId = authStore.getUserId // Assuming getUserId is a computed or a ref inside a
+      const studentProfile = await studentService.getStudentById(userId)
+      const teacherProfile = await teacherService.getTeacherById(userId)
+      if (studentProfile.length > 0 && studentProfile[0].user_id == userId) {
+        role.value = 'student'
+      } else if (teacherProfile.length > 0 && teacherProfile[0].user_id == userId) {
+        role.value = 'teacher'
+      }
       const profile = await userService.getUserById(userId)
       _initializeProfile(profile)
     } catch (error) {
@@ -28,8 +38,9 @@ export const useProfileStore = defineStore('profileStoreId', () => {
 
   return { 
     email, 
-    name, 
-    onError, 
-    getProfile 
+    name,
+    role,
+    onError,
+    getProfile
   }
 })
