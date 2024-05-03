@@ -13,6 +13,19 @@
       "id": 2
     }
   ],
+
+  "teachers": [
+    {
+      "user_id": 1
+    }
+  ],
+
+  "students": [
+    {
+      "user_id": 2
+    }
+  ],
+
   "comments": [
     {
       "userId": 1,

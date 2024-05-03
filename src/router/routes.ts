@@ -6,12 +6,10 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/AboutView.vue')
+    component: HomeView,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/profile',
