@@ -66,3 +66,5 @@ content-type: application/json
 GET http://127.0.0.1:3000/users/2
 Authorization: Bearer REMPLACER_PAR_JETON_NON_EXPIRÉ_UTILISATEUR_1
 
+### test
+GET http://127.0.0.1:3000/students?user_id=2

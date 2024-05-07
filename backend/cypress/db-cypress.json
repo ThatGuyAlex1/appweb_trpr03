@@ -2,10 +2,18 @@
   "users": [
     {
       "email": "mon@courriel.com",
-      "password": "$2a$10$UeJISCILFQIFIT38Fe9wTexjbJq0vERSHuH5lLmG3eMaxQxEEq3VS",
+      "password": "$2a$10$OFw7uAMf0jzZTbpJQgGcRePhAEZ6p3fQ.0Oj4agIzsp0SMtAPgRze",
       "name": "Bruce Lee",
       "id": 1
     }
   ],
-  "comments": []
+  "comments": [
+  ],
+  "teachers": [
+    {
+      "user_id": 1
+    }
+  ],
+  "students": [
+  ]
 }
