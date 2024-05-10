@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useAuthStore } from '../stores/authStore'
+import { useProfileStore } from '../stores/profileStore'
 import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
+const profileStore = useProfileStore()
 const router = useRouter()
 
 const isLoggedIn = computed(() => authStore.isLoggedIn)
+//Meilleure syntaxe donnée par Jimmy ! Merci ;)
+const isTeacher = computed(() => profileStore.role === 'teacher')
 
 function logout() {
   authStore.logout()
@@ -38,6 +42,15 @@ function logout() {
           :to="{ name: 'Profile' }"
         >
           Profile
+        </RouterLink>
+        <!-- La page Manager n'est accessible que si l'utilisateur connecté est un teacher (v-if). -->
+        <RouterLink
+          class="nav-link"
+          :class="{ active: $route.name == 'Manager' }"
+          v-if="isTeacher"
+          :to="{ name: 'Manager' }"
+        >
+          Gestionnaire
         </RouterLink>
       </div>
       <div class="d-flex">
