@@ -31,7 +31,29 @@ async function getAllStudents() {
     }
   }
 
+  async function deleteSpecificStudent(userId) {
+    try {
+
+      let student = await getStudentById(userId)
+      // axiosAuth est une instance d'axios configurée pour ajouter le JWT à une requête nécessitant une authentification.
+      // voir le fichier src/shared/axiosAuth.js
+      const response1 = await axiosAuth.delete(
+        // TODO : utiliser une variable d'environnement pour l'url de l'api rest
+        `http://127.0.0.1:3000/students/${student[0].id}`
+      )
+      
+      const response2 = await axiosAuth.delete(
+        // TODO : utiliser une variable d'environnement pour l'url de l'api rest
+        `http://127.0.0.1:3000/users/${userId}`
+      )
+  
+    } catch (error) {
+      throw parseAxiosError(error)
+    }
+  }
+
 export const studentService = {
   getAllStudents,
-  getStudentById
+  getStudentById,
+  deleteSpecificStudent
 }
