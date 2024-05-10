@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useAuthStore } from '../stores/authStore'
+import type User from '../scripts/user'
 
 // Le but de ce fichier est de créer une instance d'axios configurée pour ajouter le JWT à toute requête nécessitant une authentification. C'est aussi l'endroit où la gestion du rafraîchissement du token d'authentification pourrait se faire.
 
