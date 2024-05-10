@@ -1,7 +1,7 @@
 import HomeView from '../views/HomeView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import LoginView from '../views/LoginView.vue'
-import ManagerView from '../views/ManagerView.vue'
+import ClassManagerView from '../views/ClassManagerView.vue'
 
 const routes = [
   {
@@ -26,9 +26,9 @@ const routes = [
     component: LoginView
   },
   {
-    path: '/manager',
-    name: 'Manager',
-    component: ManagerView,
+    path: '/classManager',
+    name: 'classManager',
+    component: ClassManagerView,
     meta: {
       requiresAuth: true,
       requiresTeacher: true

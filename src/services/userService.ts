@@ -1,5 +1,6 @@
 import { parseAxiosError } from '../shared/parseAxiosError'
 import axiosAuth from '../shared/axiosAuth'
+import type User from '../scripts/user'
 
 async function getUserById(userId: Number) {
   try {
@@ -16,6 +17,11 @@ async function getUserById(userId: Number) {
   }
 }
 
+async function updateUser(user : User){
+  await axiosAuth.put(`http://127.0.0.1:3000/users/${user.id}`, user)
+}
+
 export const userService = {
-  getUserById
+  getUserById,
+  updateUser
 }
