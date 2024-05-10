@@ -21,7 +21,7 @@ export const useProfileStore = defineStore('profileStoreId', () => {
     try {
       onError.value = false
       const authStore = useAuthStore()
-      const userId = authStore.getUserId // Assuming getUserId is a computed or a ref inside a
+      const userId = parseInt(authStore.getUserId) // Assuming getUserId is a computed or a ref inside a
       const studentProfile = await studentService.getStudentById(userId)
       const teacherProfile = await teacherService.getTeacherById(userId)
       if (studentProfile.length > 0 && studentProfile[0].user_id == userId) {
@@ -36,8 +36,8 @@ export const useProfileStore = defineStore('profileStoreId', () => {
     }
   }
 
-  return { 
-    email, 
+  return {
+    email,
     name,
     role,
     onError,
