@@ -14,6 +14,7 @@ const isTeacher = computed(() => profileStore.role === 'teacher')
 
 function logout() {
   authStore.logout()
+  profileStore.logout()
   router.push({
     name: 'Login'
   })
@@ -46,9 +47,9 @@ function logout() {
         <!-- La page Manager n'est accessible que si l'utilisateur connecté est un teacher (v-if). -->
         <RouterLink
           class="nav-link"
-          :class="{ active: $route.name == 'Manager' }"
+          :class="{ active: $route.name == 'classManager' }"
           v-if="isTeacher"
-          :to="{ name: 'Manager' }"
+          :to="{ name: 'classManager' }"
         >
           Gestionnaire
         </RouterLink>

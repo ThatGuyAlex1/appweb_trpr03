@@ -18,7 +18,7 @@ const oldPassword = ref('')
 const newPassword = ref('')
 const confirmPassword = ref('')
 const user = ref({} as User)
-const isLoading = ref(false)
+const isLoading = ref(true)
 
 onMounted(async () => {
   try {
@@ -67,44 +67,49 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
 </script>
 
 <template>
-  <div>
-    <h1>Profile</h1>
-    <div>Nom: {{ name }}</div>
-    <div>Courriel: {{ email }}</div>
-    <div>Role: {{ role }}</div>
+  <div v-if="!isLoading">
+    <div>
+      <h1>Profile</h1>
+      <div>Nom: {{ name }}</div>
+      <div>Courriel: {{ email }}</div>
+      <div>Role: {{ role }}</div>
+    </div>
 
-    <h2>Modification du mot de passe :</h2>
-    <Form @submit="saveUserPassword">
-      <div class="form-group">
-        <label for="newPassword">Nouveau mot de passe :</label>
-        <Field
-          type="password"
-          class="form-control"
-          id="newPassword"
-          name="newPassword"
-          placeholder="Entrer votre nouveau mot de passe"
-          v-model="newPassword"
-          :rules="isRequired"
-        />
-        <ErrorMessage class="text-danger" name="newPassword" />
-      </div>
-      <div class="form-group">
-        <label for="confirmPassword">Confirmation mot de passe :</label>
-        <Field
-          type="password"
-          class="form-control"
-          id="confirmPassword"
-          name="confirmPassword"
-          placeholder="Confirmer votre nouveau mot de passe"
-          v-model="confirmPassword"
-          :rules="isRequired"
-        />
-        <ErrorMessage class="text-danger" name="confirmPassword" />
-      </div>
-      <button type="submit" class="btn btn-primary">Confirmer</button>
-    </Form>
+    <div>
+      <h3>Modification du mot de passe :</h3>
+      <Form @submit="saveUserPassword">
+        <div class="form-group">
+          <label for="newPassword">Nouveau mot de passe :</label>
+          <Field
+            type="password"
+            class="form-control"
+            id="newPassword"
+            name="newPassword"
+            placeholder="Entrer votre nouveau mot de passe"
+            v-model="newPassword"
+            :rules="isRequired"
+          />
+          <ErrorMessage class="text-danger" name="newPassword" />
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirmation mot de passe :</label>
+          <Field
+            type="password"
+            class="form-control"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="Confirmer votre nouveau mot de passe"
+            v-model="confirmPassword"
+            :rules="isRequired"
+          />
+          <ErrorMessage class="text-danger" name="confirmPassword" />
+        </div>
+        <button type="submit" class="btn btn-primary">Confirmer</button>
+      </Form>
+    </div>
+
     <div v-if="profileStore.role == 'teacher'">
-      <h2>Modification du nom complet :</h2>
+      <h3>Modification du nom complet :</h3>
       <Form @submit="saveUserName">
         <div class="form-group">
           <label for="oldPassword">Nouveau nom complet :</label>
@@ -122,6 +127,8 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
         <button type="submit" class="btn btn-primary">Confirmer</button>
       </Form>
     </div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
     <Loading :active="isLoading" />
   </div>
 </template>

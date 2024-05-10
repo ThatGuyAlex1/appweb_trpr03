@@ -1,5 +1,4 @@
-<script script lang="ts"></script>
-
+<script setup lang="ts"></script>
 
 <template>
   <div class="container">
@@ -25,5 +24,4 @@
     </table>
     <router-link to="/create-student" class="btn btn-primary">Créer un étudiant</router-link>
   </div>
-    
 </template>

@@ -18,6 +18,12 @@ export const useProfileStore = defineStore('profileStoreId', () => {
     onError.value = false
   }
 
+  function logout() {
+    email.value = ''
+    name.value = ''
+    role.value = ''
+  }
+
   async function getProfile() {
     try {
       onError.value = false
@@ -58,6 +64,7 @@ export const useProfileStore = defineStore('profileStoreId', () => {
     role,
     onError,
     getProfile,
-    updateProfile
+    updateProfile,
+    logout
   }
 })

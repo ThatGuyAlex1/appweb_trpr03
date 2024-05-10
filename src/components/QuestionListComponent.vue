@@ -1,5 +1,4 @@
-<script script lang="ts"></script>
-
+<script setup lang="ts"></script>
 
 <template>
   <div class="container">
@@ -14,7 +13,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="question in questions" :key="student.id"> <!-- comment aller chercher les questions ? -->
+        <tr v-for="question in questions" :key="student.id">
+          <!-- comment aller chercher les questions ? -->
           <td>{{ question.description }}</td>
           <td>{{ question.priorityLevel }}</td>
           <td>{{ question.questionType }}</td>
@@ -25,5 +25,4 @@
       </tbody>
     </table>
   </div>
-    
 </template>
