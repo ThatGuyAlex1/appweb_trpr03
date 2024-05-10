@@ -9,14 +9,12 @@ import type User from '../scripts/user'
 export const useProfileStore = defineStore('profileStoreId', () => {
   const email = ref('')
   const name = ref('')
-  const password = ref('')
   const role = ref('')
   const onError = ref(false)
 
   function _initializeProfile(profile: { email: string; name: string; password: string }) {
     email.value = profile.email
     name.value = profile.name
-    password.value = profile.password
     onError.value = false
   }
 
@@ -57,7 +55,6 @@ export const useProfileStore = defineStore('profileStoreId', () => {
   return { 
     email, 
     name,
-    password,
     role,
     onError,
     getProfile,

@@ -4,6 +4,7 @@ import { Field, Form, ErrorMessage, defineRule, validate } from 'vee-validate'
 import { required } from '@vee-validate/rules'
 import { useProfileStore } from '../stores/profileStore'
 import type User from '../scripts/user'
+import Loading from 'vue-loading-overlay'
 
 defineRule('isRequired', required);
 
@@ -94,8 +95,8 @@ const isRequired = value => !value ? 'Ce champ est requis.' : true;
     </div>
     <button type="submit" class="btn btn-primary">Confirmer</button>
     </Form>
-    <Loading :active="isLoading" />
     </div>
+    <Loading :active="isLoading" />
   </div>
     
 </template>

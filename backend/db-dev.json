@@ -2,8 +2,8 @@
   "users": [
     {
       "email": "test@test.com",
-      "name": "Emmett Brown3",
-      "password": "$2a$10$abYs4Wl0OXfUUaPW0BfkdOlJCM0tNIU9HOF1y6DpR1wIFskX6hQYC",
+      "name": "Emmett Brown",
+      "password": "$2a$10$UI1L6Aio91eCBTU588Ylxeq1uOhoamxfg3uwUjmA7j0/99DPRlAIu",
       "id": 1
     },
     {
