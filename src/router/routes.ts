@@ -1,6 +1,7 @@
 import HomeView from '../views/HomeView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import LoginView from '../views/LoginView.vue'
+import UpdateView from '../views/ProfileUpdateView.vue'
 
 const routes = [
   {
@@ -15,6 +16,14 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: ProfileView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/updateProfile',
+    name: 'UpdateProfile',
+    component: UpdateView,
     meta: {
       requiresAuth: true
     }

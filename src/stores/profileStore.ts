@@ -4,16 +4,19 @@ import { userService } from '../services/userService'
 import { teacherService } from '../services/teacherService'
 import { studentService } from '../services/studentService'
 import { useAuthStore } from './authStore'
+import type User from '../scripts/user'
 
 export const useProfileStore = defineStore('profileStoreId', () => {
   const email = ref('')
   const name = ref('')
+  const password = ref('')
   const role = ref('')
   const onError = ref(false)
 
-  function _initializeProfile(profile: { email: string; name: string }) {
+  function _initializeProfile(profile: { email: string; name: string; password: string }) {
     email.value = profile.email
     name.value = profile.name
+    password.value = profile.password
     onError.value = false
   }
 
@@ -36,11 +39,28 @@ export const useProfileStore = defineStore('profileStoreId', () => {
     }
   }
 
+  async function updateProfile(user: User) {
+    try {
+      onError.value = false
+      const authStore = useAuthStore()
+      user.id = parseInt(authStore.getUserId,10)
+      if(user.password == null || user.password == ''){
+        user.password = (await userService.getUserById(user.id)).password
+      }
+      console.log(user)
+      userService.updateUser(user)
+    } catch (error) {
+      onError.value = true
+    }
+  }
+
   return { 
     email, 
     name,
+    password,
     role,
     onError,
-    getProfile
+    getProfile,
+    updateProfile
   }
 })
