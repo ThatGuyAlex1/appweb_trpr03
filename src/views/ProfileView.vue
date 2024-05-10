@@ -67,69 +67,71 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
 </script>
 
 <template>
-  <div v-if="!isLoading">
-    <div>
-      <h1>Profile</h1>
-      <div>Nom: {{ name }}</div>
-      <div>Courriel: {{ email }}</div>
-      <div>Role: {{ role }}</div>
-    </div>
+  <div class="container">
+    <div v-if="!isLoading">
+      <div>
+        <h1 class="text-center">Profile</h1>
+        <div>Nom: {{ name }}</div>
+        <div>Courriel: {{ email }}</div>
+        <div>Role: {{ role }}</div>
+      </div>
 
-    <div>
-      <h3>Modification du mot de passe :</h3>
-      <Form @submit="saveUserPassword">
-        <div class="form-group">
-          <label for="newPassword">Nouveau mot de passe :</label>
-          <Field
-            type="password"
-            class="form-control"
-            id="newPassword"
-            name="newPassword"
-            placeholder="Entrer votre nouveau mot de passe"
-            v-model="newPassword"
-            :rules="isRequired"
-          />
-          <ErrorMessage class="text-danger" name="newPassword" />
-        </div>
-        <div class="form-group">
-          <label for="confirmPassword">Confirmation mot de passe :</label>
-          <Field
-            type="password"
-            class="form-control"
-            id="confirmPassword"
-            name="confirmPassword"
-            placeholder="Confirmer votre nouveau mot de passe"
-            v-model="confirmPassword"
-            :rules="isRequired"
-          />
-          <ErrorMessage class="text-danger" name="confirmPassword" />
-        </div>
-        <button type="submit" class="btn btn-primary">Confirmer</button>
-      </Form>
-    </div>
+      <div>
+        <h3>Modification du mot de passe :</h3>
+        <Form @submit="saveUserPassword">
+          <div class="form-group">
+            <label for="newPassword">Nouveau mot de passe :</label>
+            <Field
+              type="password"
+              class="form-control"
+              id="newPassword"
+              name="newPassword"
+              placeholder="Entrer votre nouveau mot de passe"
+              v-model="newPassword"
+              :rules="isRequired"
+            />
+            <ErrorMessage class="text-danger" name="newPassword" />
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirmation mot de passe :</label>
+            <Field
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirmer votre nouveau mot de passe"
+              v-model="confirmPassword"
+              :rules="isRequired"
+            />
+            <ErrorMessage class="text-danger" name="confirmPassword" />
+          </div>
+          <button type="submit" class="btn btn-primary">Confirmer</button>
+        </Form>
+      </div>
 
-    <div v-if="profileStore.role == 'teacher'">
-      <h3>Modification du nom complet :</h3>
-      <Form @submit="saveUserName">
-        <div class="form-group">
-          <label for="oldPassword">Nouveau nom complet :</label>
-          <Field
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-            placeholder="Entrer votre nouveau nom"
-            v-model="user.name"
-            :rules="isRequired"
-          />
-          <ErrorMessage class="text-danger" name="name" />
-        </div>
-        <button type="submit" class="btn btn-primary">Confirmer</button>
-      </Form>
+      <div v-if="profileStore.role == 'teacher'">
+        <h3>Modification du nom complet :</h3>
+        <Form @submit="saveUserName">
+          <div class="form-group">
+            <label for="oldPassword">Nouveau nom complet :</label>
+            <Field
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              placeholder="Entrer votre nouveau nom"
+              v-model="user.name"
+              :rules="isRequired"
+            />
+            <ErrorMessage class="text-danger" name="name" />
+          </div>
+          <button type="submit" class="btn btn-primary">Confirmer</button>
+        </Form>
+      </div>
     </div>
-  </div>
-  <div class="d-flex justify-content-center align-items-center">
-    <Loading :active="isLoading" />
+    <div class="pt-5 mt-5 d-flex justify-content-center align-items-center">
+      <Loading :active="isLoading" />
+    </div>
   </div>
 </template>
 
