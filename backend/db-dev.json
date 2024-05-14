@@ -19,16 +19,10 @@
       "id": 3
     },
     {
-      "email": "what@gmail.com",
-      "password": "$2a$10$K/dWJjOWLZLBzgS66neDouqDhXaz3F4bffEzyDMPN6pZaVkKsouEG",
-      "name": "A",
+      "email": "bingus@test.com",
+      "password": "$2a$10$s2wL77/OafjGX1LME.vO4OfOa3E/Uf89CwfNqRkmzd9rdEjCUfYh6",
+      "name": "bingus",
       "id": 4
-    },
-    {
-      "email": "what1@gmail.com",
-      "password": "$2a$10$VP2Rkf0Yfs4O/wpnaAgkpunZYMHHwtxwQ8HRAZ2d9zAmkdL/G9iea",
-      "name": "A1",
-      "id": 5
     }
   ],
   "teachers": [
@@ -49,13 +43,8 @@
     {
       "user_id": 4,
       "id": 3
-    },
-    {
-      "user_id": 5,
-      "id": 4
     }
   ],
-
   "comments": [
     {
       "userId": 1,
