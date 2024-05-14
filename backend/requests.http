@@ -21,7 +21,7 @@ POST http://127.0.0.1:3000/register
 content-type: application/json
 
 {
-  "email": "new@test.com",
+  "email": "new1@test.com",
   "password": "test",
   "name": "Adélard Rochon"
 }
