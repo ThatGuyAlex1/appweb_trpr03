@@ -9,14 +9,14 @@ import type Question from '../scripts/question'
 
 export const useQuestionStore = defineStore('questionStoreId', () => {
     const description = ref('')
-    const priorityLevel = ref('')
-    const questionType = ref('')
-    const userId = ref('')
+    const priorityLevel = ref()
+    const questionCategoryId = ref()
+    const userId = ref()
 
-    function _initializeQuestion(question: { description: string; priorityLevel: string; questionType: string; userId: string }) {
+    function _initializeQuestion(question: { description: string; priorityLevel: number; questionCategoryId: number; userId: number }) {
         description.value = question.description
         priorityLevel.value = question.priorityLevel
-        questionType.value = question.questionType
+        questionCategoryId.value = question.questionCategoryId
         userId.value = question.userId
     }
 

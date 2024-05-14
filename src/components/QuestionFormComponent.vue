@@ -25,8 +25,8 @@
         />
       </div>
       <div class="form-group">
-        <label for="questionType">Catégorie de questions</label>
-        <select class="form-control" id="questionType">
+        <label for="questionCategory">Catégorie de questions</label>
+        <select class="form-control" id="questionCategory">
           <option>Aide au devoir</option>
           <option>Clarification de concept</option>
           <option>Préparation a un examen</option>

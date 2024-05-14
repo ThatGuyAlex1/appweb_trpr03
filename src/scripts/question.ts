@@ -3,5 +3,5 @@ export default interface Question {
     stutdentId: number;
     description: string;
     priorityLevel: number;
-    questionTypeId: number;
+    questionCategoryId: number;
   } 

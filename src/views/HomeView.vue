@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import Loading from 'vue-loading-overlay'
 import { Field, Form, ErrorMessage, defineRule, validate } from 'vee-validate'
 import { required } from '@vee-validate/rules'
-import CreateQuestionTypeForm from '../components/CreateQuestionTypeFormComponent.vue'
+import CreateQuestionCategoryForm from '../components/CreateQuestionCategoryFormComponent.vue'
 import QuestionForm from '../components/QuestionFormComponent.vue'
 import QuestionList from '../components/QuestionListComponent.vue'
 
@@ -50,7 +50,7 @@ const isTeacher = computed(() => profileStore.role === 'teacher')
           </div>
 
           <div class="col-md-5">
-            <CreateQuestionTypeForm v-if="isTeacher" />
+            <CreateQuestionCategoryForm v-if="isTeacher" />
             <QuestionForm v-else />
           </div>
         </div>

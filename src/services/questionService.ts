@@ -62,13 +62,13 @@ async function getQuestionsByPriorityLevel(priorityLevel:Number) {
     }
 }
 
-async function getQuestionsByCategory(questionTypeId:Number) {
+async function getQuestionsByCategory(questionCategoryId:Number) {
     try {
       // axiosAuth est une instance d'axios configurée pour ajouter le JWT à une requête nécessitant une authentification.
       // voir le fichier src/shared/axiosAuth.js
       const response = await axiosAuth.get(
         // TODO : utiliser une variable d'environnement pour l'url de l'api rest
-        `http://127.0.0.1:3000/questions/${questionTypeId}`
+        `http://127.0.0.1:3000/questions/${questionCategoryId}`
       )
   
       return response.data
