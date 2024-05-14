@@ -36,10 +36,20 @@ export const useStudentStore = defineStore('studentStoreId', () => {
     }
   }
 
+  async function addSpecificStudent(name : string, email: string, password: string) {
+    try {
+      onError.value = false
+      await studentService.addSpecificStudent(name, email, password)
+    } catch (error) {
+      onError.value = true
+    }
+  }
+
   return { 
     students,
     onError,
     getStudents,
-    deleteSpecificStudent
+    deleteSpecificStudent,
+    addSpecificStudent
   }
 })

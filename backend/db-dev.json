@@ -7,10 +7,28 @@
       "id": 1
     },
     {
+      "email": "mon@courriel.com",
+      "password": "$2a$10$sQ1zMa4PnFTP5w/G7TcyKOiKHNfNTewJL8MMHwvR0B50mwLPq75Bu",
+      "name": "Bruce Lee",
+      "id": 2
+    },
+    {
       "email": "new@test.com",
       "password": "$2a$10$7wppPMNkpubqtQ8GLzCd.uvYP.O.UxBHRgf4hrKARVOm6KJ56x6KK",
       "name": "Adélard Rochon",
       "id": 3
+    },
+    {
+      "email": "what@gmail.com",
+      "password": "$2a$10$K/dWJjOWLZLBzgS66neDouqDhXaz3F4bffEzyDMPN6pZaVkKsouEG",
+      "name": "A",
+      "id": 4
+    },
+    {
+      "email": "what1@gmail.com",
+      "password": "$2a$10$VP2Rkf0Yfs4O/wpnaAgkpunZYMHHwtxwQ8HRAZ2d9zAmkdL/G9iea",
+      "name": "A1",
+      "id": 5
     }
   ],
   "teachers": [
@@ -21,8 +39,20 @@
   ],
   "students": [
     {
+      "id": 1,
+      "user_id": 2
+    },
+    {
       "id": 2,
       "user_id": 3
+    },
+    {
+      "user_id": 4,
+      "id": 3
+    },
+    {
+      "user_id": 5,
+      "id": 4
     }
   ],
   "comments": [

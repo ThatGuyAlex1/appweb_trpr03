@@ -3,6 +3,7 @@ import { ref, onMounted, computed, nextTick } from 'vue'
 import { Field, Form, ErrorMessage, defineRule, validate } from 'vee-validate'
 import { required } from '@vee-validate/rules'
 import { useStudentStore } from '../stores/studentStore'
+import studentForm from '../components/CreateStudentFormComponent.vue'
 import type User from '../scripts/user'
 import Loading from 'vue-loading-overlay'
 
@@ -11,6 +12,7 @@ const studentStore = useStudentStore()
 const students = computed(() => studentStore.students as User[])
 const onError = computed(() => studentStore.onError)
 const isLoading = ref(false)
+const showForm = ref(false)
 
 onMounted(async () => {
   isLoading.value = true
@@ -38,9 +40,19 @@ async function reloadStudents() {
   }
 }
 
+async function showStudentForm() {
+  if(showForm.value == true){
+    showForm.value = false
+  }
+  else if(showForm.value == false){
+    showForm.value = true
+  }
+}
+
 async function deleteStudent(user: User) {
   try {
     await studentStore.deleteSpecificStudent(user.id)
+    confirm("L'étudiant a été supprimé avec succes")
     reloadStudents()
   } catch (error) {
     confirm("Une erreur s'est produite lors de l'effacement de l'utilisateur.")
@@ -72,9 +84,10 @@ async function deleteStudent(user: User) {
       </tbody>
     </table>
     
-    <router-link to="/create-student" class="btn btn-primary">Créer un étudiant</router-link>
+    <button @click="showStudentForm()" class="btn btn-primary">Créer un étudiant</button>
     <button @click="reloadStudents()" class="btn btn-secondary">Recharger</button>
   </div>
   <Loading :active="isLoading" />
+  <studentForm v-if="showForm" @new-student="reloadStudents"/>
     
 </template>
