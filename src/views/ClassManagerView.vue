@@ -84,7 +84,7 @@ async function deleteStudent(user: User) {
       </tbody>
     </table>
     
-    <button @click="showStudentForm()" class="btn btn-primary">Créer un étudiant</button>
+    <button @click="showStudentForm()" class="btn btn-primary" id="show-student-button">Créer un étudiant</button>
     <button @click="reloadStudents()" class="btn btn-secondary">Recharger</button>
   </div>
   <Loading :active="isLoading" />

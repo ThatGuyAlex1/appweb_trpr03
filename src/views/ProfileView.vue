@@ -45,6 +45,7 @@ async function saveUserPassword() {
       console.log(user.value)
       await profileStore.updateProfile(user.value)
       confirm('Mot de passe changé avec succes')
+      reloadProfile()
     }
   } catch (error) {
     confirm("Une erreur s'est produite lors de la mise a jour du profil de l'utilisateur.")
@@ -57,8 +58,20 @@ async function saveUserName() {
     user.value.email = profileStore.email
     await profileStore.updateProfile(user.value)
     confirm('Le nom a changé avec succes')
+    reloadProfile()
   } catch (error) {
     confirm("Une erreur s'est produite lors de la mise a jour du profil de l'utilisateur.")
+  }
+}
+
+async function reloadProfile() {
+  isLoading.value = true
+  try {
+    await profileStore.getProfile()
+  } catch (error) {
+    confirm("Erreur lors du rechargement des étudiants.")
+  } finally {
+    isLoading.value = false
   }
 }
 
@@ -70,9 +83,9 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
     <div v-if="!isLoading">
       <div>
         <h1 class="text-center">Profile</h1>
-        <div>Nom: {{ name }}</div>
-        <div>Courriel: {{ email }}</div>
-        <div>Role: {{ role }}</div>
+        <div id="name">Nom: {{ name }}</div>
+        <div id="email">Courriel: {{ email }}</div>
+        <div id="role">Role: {{ role }}</div>
       </div>
 
       <div>
@@ -104,7 +117,7 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
             />
             <ErrorMessage class="text-danger" name="confirmPassword" />
           </div>
-          <button type="submit" class="btn btn-primary">Confirmer</button>
+          <button type="submit" id="submit-password" class="btn btn-primary">Confirmer</button>
         </Form>
       </div>
 
@@ -124,7 +137,7 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
             />
             <ErrorMessage class="text-danger" name="name" />
           </div>
-          <button type="submit" class="btn btn-primary">Confirmer</button>
+          <button type="submit" id="submit-name" class="btn btn-primary">Confirmer</button>
         </Form>
       </div>
     </div>

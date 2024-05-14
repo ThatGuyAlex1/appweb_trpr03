@@ -60,7 +60,7 @@ const isRequired = value => !value ? 'Ce champ est requis.' : true;
       <Field type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirmer son mot de passe" v-model="confirmPassword" :rules="isRequired" />
       <ErrorMessage class="text-danger" name="confirmPassword" />
     </div>
-    <button type="submit" class="btn btn-primary">Envoyer</button>
+    <button type="submit" id="submit-student" class="btn btn-primary">Envoyer</button>
     </Form>
   </div>
 </template>
