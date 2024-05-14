@@ -1,4 +1,6 @@
 {
-  "/users*": "/600/users$1",
+  "/students*": "/660/students$1",
+  "/teachers*": "/660/teachers$1",
+  "/users*": "/660/users$1",
   "/comments*": "/644/comments$1"
 }
