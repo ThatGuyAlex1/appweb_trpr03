@@ -34,17 +34,16 @@ async function reloadStudents() {
   try {
     await studentStore.getStudents()
   } catch (error) {
-    confirm("Erreur lors du rechargement des étudiants.")
+    confirm('Erreur lors du rechargement des étudiants.')
   } finally {
     isLoading.value = false
   }
 }
 
 async function showStudentForm() {
-  if(showForm.value == true){
+  if (showForm.value == true) {
     showForm.value = false
-  }
-  else if(showForm.value == false){
+  } else if (showForm.value == false) {
     showForm.value = true
   }
 }
@@ -58,36 +57,37 @@ async function deleteStudent(user: User) {
     confirm("Une erreur s'est produite lors de l'effacement de l'utilisateur.")
   }
 }
-
 </script>
 
-
 <template>
-  <div class="container" v-if="!isLoading">
-    <h1>Liste des étudiants</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Nom</th>
-          <th scope="col">Courriel</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="student in students" v:key="student.id" id="studentList">
-          <td>{{ student.name }}</td>
-          <td>{{ student.email }}</td>
-          <td>
-            <button @click="deleteStudent(student)" class="btn btn-danger" >Supprimer</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
-    <button @click="showStudentForm()" class="btn btn-primary">Créer un étudiant</button>
-    <button @click="reloadStudents()" class="btn btn-secondary">Recharger</button>
+  <div class="container">
+    <div v-if="!isLoading">
+      <div>
+        <h1 class="text-center">Créer un nouvel étudiant</h1>
+        <studentForm @new-student="reloadStudents" />
+      </div>
+      <h1 class="text-center">Liste des étudiants</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Courriel</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="student in students" v:key="student.id" id="studentList">
+            <td>{{ student.name }}</td>
+            <td>{{ student.email }}</td>
+            <td>
+              <button @click="deleteStudent(student)" class="btn btn-danger">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pt-5 mt-5 d-flex justify-content-center align-items-center">
+      <Loading :active="isLoading" />
+    </div>
   </div>
-  <Loading :active="isLoading" />
-  <studentForm v-if="showForm" @new-student="reloadStudents"/>
-    
 </template>
