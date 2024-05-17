@@ -49,7 +49,7 @@ const isRequired = (value) => (!value ? 'Ce champ est requis.' : true)
 
 <template>
   <div class="container">
-    <Form @submit="addNewUser">
+    <Form>
       <div class="form-group">
         <label for="studentName">Nom :</label>
         <Field
@@ -102,7 +102,7 @@ const isRequired = (value) => (!value ? 'Ce champ est requis.' : true)
         />
         <ErrorMessage class="text-danger" name="confirmPassword" />
       </div>
-      <button type="submit" class="btn btn-primary">Envoyer</button>
+      <button type="submit" @click="addNewUser" id="submit-student" class="btn btn-primary">Envoyer</button>
     </Form>
   </div>
 </template>

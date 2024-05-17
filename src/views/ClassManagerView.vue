@@ -4,6 +4,7 @@ import { Field, Form, ErrorMessage, defineRule, validate } from 'vee-validate'
 import { required } from '@vee-validate/rules'
 import { useStudentStore } from '../stores/studentStore'
 import StudentForm from '../components/CreateStudentFormComponent.vue'
+import StudentList from '../components/StudentList.vue'
 import type User from '../scripts/user'
 import Loading from 'vue-loading-overlay'
 import { useToast } from 'vue-toast-notification'
@@ -88,26 +89,7 @@ function handleNewStudent() {
         <StudentForm @new-student="handleNewStudent" />
       </div>
       <h1 class="text-center">Liste des étudiants</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Nom</th>
-            <th scope="col">Courriel</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="student in students" v:key="student.id" id="studentList">
-            <td>{{ student.name }}</td>
-            <td>{{ student.email }}</td>
-            <td>
-              <button @click="askDeleteStudent(student.id)" class="btn btn-danger">
-                Supprimer
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <StudentList :students="students" @delete-student="askDeleteStudent" />
     </div>
 
     <!--Modal de confirmation de supression d'étudiant-->
