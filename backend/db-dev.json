@@ -56,10 +56,39 @@
     }
   ],
 
-  "comments": [
+  "categories": [
     {
-      "userId": 1,
-      "comment": "J'ai inventé la machine à voyager dans le temps.",
+      "name": "Autres",
+      "id": 1
+    },
+    {
+      "name": "Clarification de concept",
+      "id": 2
+    },
+    {
+      "name": "Problème technique",
+      "id": 3
+    },
+    {
+      "name": "Demande d'exemple",
+      "id": 4
+    },
+    {
+      "name": "Demande de précision",
+      "id": 5
+    },
+    {
+      "name": "Problème personnel",
+      "id": 6
+    }
+  ],
+
+  "questions": [
+    {
+      "studentId": 1,
+      "description": "J'ai inventé la machine à voyager dans le temps.",
+      "priorityLevel": 3,
+      "questionCategoryId": 2,
       "id": 1
     }
   ]
