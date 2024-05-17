@@ -17,12 +17,6 @@
       "password": "$2a$10$7wppPMNkpubqtQ8GLzCd.uvYP.O.UxBHRgf4hrKARVOm6KJ56x6KK",
       "name": "Adélard Rochon",
       "id": 3
-    },
-    {
-      "email": "a@test.com",
-      "password": "$2a$10$ZMtxIfru9/yFIfZ21cgZG.k63J5NUylPIM/OX8TERUyvTnM4.f0Q.",
-      "name": "a",
-      "id": 4
     }
   ],
   "teachers": [
@@ -39,10 +33,6 @@
     {
       "id": 2,
       "user_id": 3
-    },
-    {
-      "user_id": 4,
-      "id": 3
     }
   ],
   "comments": [

@@ -8,15 +8,18 @@ import type User from '../scripts/user'
 import Loading from 'vue-loading-overlay'
 import { useToast } from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
-import DeleteModal from '../components/DeleteModal.vue'
+import ConfirmDeleteModal from '../components/ConfirmDeleteModal.vue'
+import NotifyDeleteModal from '../components/NotifyDeleteModal.vue'
 import CreateModal from '../components/CreateModal.vue'
 
 const studentStore = useStudentStore()
 
 const students = computed(() => studentStore.students as User[])
+const studentToDelete = ref()
 const onError = computed(() => studentStore.onError)
 const isLoading = ref(false)
-const triggerDeleteModal = ref(0)
+const triggerConfirmDeleteModal = ref(0)
+const triggerNotifyDeleteModal = ref(0)
 const triggerCreateModal = ref(0)
 
 onMounted(async () => {
@@ -51,11 +54,16 @@ async function reloadStudents() {
   }
 }
 
-async function deleteStudent(user: User) {
+function askDeleteStudent(userId: Number) {
+  studentToDelete.value = userId
+  triggerConfirmDeleteModal.value++
+}
+
+async function deleteStudent() {
   try {
     isLoading.value = true
-    await studentStore.deleteSpecificStudent(user.id)
-    triggerDeleteModal.value++
+    await studentStore.deleteSpecificStudent(studentToDelete.value)
+    triggerNotifyDeleteModal.value++
     reloadStudents()
   } catch (error) {
     useToast().error(
@@ -93,16 +101,27 @@ function handleNewStudent() {
             <td>{{ student.name }}</td>
             <td>{{ student.email }}</td>
             <td>
-              <button @click="deleteStudent(student)" class="btn btn-danger">Supprimer</button>
+              <button @click="askDeleteStudent(student.id)" class="btn btn-danger">
+                Supprimer
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!--Modal de supression d'étudiant-->
-    <DeleteModal
-      :trigger="triggerDeleteModal"
+    <!--Modal de confirmation de supression d'étudiant-->
+    <ConfirmDeleteModal
+      @onDeleteConfirmed="deleteStudent"
+      :trigger="triggerConfirmDeleteModal"
+      title="Attention"
+      body="Voulez-vous supprimer cet étudiant ?"
+      confirmButton="Supprimer"
+      cancelButton="Annuler"
+    />
+    <!--Modal de notification de supression d'étudiant-->
+    <NotifyDeleteModal
+      :trigger="triggerNotifyDeleteModal"
       title="Succès !"
       body="L'étudiant a été supprimé avec succès."
       dismissButton="Ok"
