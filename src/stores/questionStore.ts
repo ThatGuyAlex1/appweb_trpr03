@@ -1,45 +1,56 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { userService } from '../services/userService'
-import { teacherService } from '../services/teacherService'
-import { studentService } from '../services/studentService'
-import { useAuthStore } from './authStore'
 import { questionService } from '../services/questionService'
 import type Question from '../scripts/question'
 
 export const useQuestionStore = defineStore('questionStoreId', () => {
-    const description = ref('')
-    const priorityLevel = ref()
-    const questionCategoryId = ref()
-    const userId = ref()
+    const questions = ref([] as Question[])
+    const onError = ref(false)
+    
 
-    function _initializeQuestion(question: { description: string; priorityLevel: number; questionCategoryId: number; userId: number }) {
-        description.value = question.description
-        priorityLevel.value = question.priorityLevel
-        questionCategoryId.value = question.questionCategoryId
-        userId.value = question.userId
+    function _initializeQuestions(questionList: Question[]) {
+        questions.value = questionList
+        onError.value = false
     }
 
-    async function getQuestion(question: Question) {
+    async function getQuestions(question: Question) {
         try {
-            const authStore = useAuthStore()
-            const userId = Number(authStore.getUserId) // Convertie userId en nombre
-            const question = await questionService.getQuestionById(userId)
-            _initializeQuestion(question)
+            onError.value = false
+            const questionsId = await questionService.getAllQuestions()
+            //aidé par chatGPT
+            const questionsTemporary: Question[] = await Promise.all(questionsId.map(async (question: { id: number; studentId: number; description: string; priorityLevel: number; questionCategoryId: number }) => {
+              return await questionService.getQuestionById(question.id);
+            }));
+          _initializeQuestions(questionsTemporary)
+          } catch (error) {
+            onError.value = true
+          }
+    }
+
+    async function deleteQuestionById(questionId : number) {
+        try {
+          onError.value = false
+          await questionService.deleteQuestionById(questionId)
         } catch (error) {
-            console.error(error)
+          onError.value = true
         }
     }
 
-    async function deleteQuestion() {
+    async function addQuestion(studentId: number, description: string, priorityLevel: number, questionCategoryId: number) {
         try {
-            const authStore = useAuthStore()
-            const userId = Number(authStore.getUserId) // Convertie userId en nombre
-            const question = await questionService.deleteQuestionById(userId)
-            await questionService.deleteQuestionById(userId)
+          onError.value = false
+          await questionService.addQuestion(studentId, description, priorityLevel, questionCategoryId)
         } catch (error) {
-            console.error(error)
+          onError.value = true
         }
+    }
+
+    return { 
+      questions,
+      onError,
+      getQuestions,
+      deleteQuestionById,
+      addQuestion
     }
 
 })

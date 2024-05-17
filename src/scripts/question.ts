@@ -1,6 +1,6 @@
 export default interface Question {
     id: number;
-    stutdentId: number;
+    studentId: number;
     description: string;
     priorityLevel: number;
     questionCategoryId: number;
