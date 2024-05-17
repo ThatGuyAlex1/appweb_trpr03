@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { Field, Form, ErrorMessage, defineRule, validate } from 'vee-validate'
-import { required } from '@vee-validate/rules'
+import { required, confirmed } from '@vee-validate/rules'
 import { useProfileStore } from '../stores/profileStore'
 import type User from '../scripts/user'
 import Loading from 'vue-loading-overlay'
 import { useToast } from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
+import NameModal from '../components/NameModal.vue'
+import PasswordModal from '../components/PasswordModal.vue'
 
 defineRule('isRequired', required)
+defineRule('isSame', confirmed)
 
 const profileStore = useProfileStore()
 
@@ -20,6 +23,8 @@ const newPassword = ref('')
 const confirmPassword = ref('')
 const user = ref({} as User)
 const isLoading = ref(true)
+const triggerNameModal = ref(0)
+const triggerPasswordModal = ref(0)
 
 onMounted(async () => {
   try {
@@ -44,15 +49,9 @@ async function saveUserPassword() {
   try {
     user.value.email = profileStore.email
     user.value.name = profileStore.name
-    if (newPassword.value != confirmPassword.value) {
-      //erreur vee-validate
-      //confirm('Le nouveau mot de passe et la confirmation du mot de passe doit être identique')
-    } else {
-      user.value.password = newPassword.value
-      await profileStore.updateProfile(user.value)
-      //modal
-      //confirm('Mot de passe changé avec succes')
-    }
+    user.value.password = newPassword.value
+    await profileStore.updateProfile(user.value)
+    triggerPasswordModal.value++
   } catch (error) {
     useToast().error(
       `Erreur avec le service: ${(error as Error).message}. Erreur lors de la mise à jour du mot de passe.`,
@@ -66,8 +65,8 @@ async function saveUserName() {
   try {
     user.value.email = profileStore.email
     await profileStore.updateProfile(user.value)
-    //modal
-    //confirm('Le nom a changé avec succes')
+    reloadProfile()
+    triggerNameModal.value++
   } catch (error) {
     useToast().error(
       `Erreur avec le service: ${(error as Error).message}. Erreur lors de la mise à jour du nom d'utilisateur.`,
@@ -76,7 +75,28 @@ async function saveUserName() {
   }
 }
 
+async function reloadProfile() {
+  try {
+    isLoading.value = true
+    await profileStore.getProfile()
+    if (onError.value) {
+      useToast().error(`Erreur avec le service: Erreur lors de la récupération du profil`, {
+        duration: 6000
+      })
+    }
+  } catch (error) {
+    useToast().error(
+      `Erreur avec le service: ${(error as Error).message}. Oups, le backend a lâché !`,
+      { duration: 6000 }
+    )
+  } finally {
+    isLoading.value = false
+  }
+}
+
 const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
+const isSame = (value: any) =>
+  value != newPassword.value ? 'Le mot de passe doit être confirmé correctement.' : true
 </script>
 
 <template>
@@ -114,7 +134,7 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
               name="confirmPassword"
               placeholder="Confirmer votre nouveau mot de passe"
               v-model="confirmPassword"
-              :rules="isRequired"
+              :rules="(isRequired, isSame)"
             />
             <ErrorMessage class="text-danger" name="confirmPassword" />
           </div>
@@ -142,6 +162,20 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
         </Form>
       </div>
     </div>
+    <!--Modal de modification de mot de passe-->
+    <PasswordModal
+      :trigger="triggerPasswordModal"
+      title="Succès !"
+      body="Votre mot de passe a été modifié avec succès."
+      dismissButton="Ok"
+    />
+    <!--Modal de modification de nom-->
+    <NameModal
+      :trigger="triggerNameModal"
+      title="Succès !"
+      body="Votre nom a été modifié avec succès."
+      dismissButton="Ok"
+    />
     <div class="pt-5 mt-5 d-flex justify-content-center align-items-center">
       <Loading :active="isLoading" />
     </div>

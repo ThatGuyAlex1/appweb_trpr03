@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, nextTick } from 'vue'
+import { ref, computed } from 'vue'
 import { Field, Form, ErrorMessage, defineRule, validate } from 'vee-validate'
-import { required } from '@vee-validate/rules'
+import { confirmed, required } from '@vee-validate/rules'
 import { useStudentStore } from '../stores/studentStore'
-import studentForm from '../components/CreateStudentFormComponent.vue'
-import type User from '../scripts/user'
-import Loading from 'vue-loading-overlay'
 import { useToast } from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
 
 defineRule('isRequired', required)
+defineRule('isSame', confirmed)
 
 const emit = defineEmits<{
   (event: 'newStudent'): void
@@ -24,19 +22,14 @@ const onError = computed(() => studentStore.onError)
 
 async function addNewUser() {
   try {
-    if (password.value != confirmPassword.value) {
-      // erreur vee-validate
-      //`Erreur de formulaire : Le mot de passe et la confirmation du mot de passe doivent être identique`,
-    } else {
-      await studentStore.addSpecificStudent(name.value, email.value, password.value)
-      if (onError.value) {
-        useToast().error(
-          `Erreur avec le service : Une erreur est survenue lors de la création de l'étudiant.`,
-          { duration: 6000 }
-        )
-      }
-      emit('newStudent')
+    await studentStore.addSpecificStudent(name.value, email.value, password.value)
+    if (onError.value) {
+      useToast().error(
+        `Erreur avec le service : Une erreur est survenue lors de la création de l'étudiant.`,
+        { duration: 6000 }
+      )
     }
+    emit('newStudent')
   } catch (error) {
     useToast().error(
       `Erreur avec le service : Une erreur est survenue lors de la création de l'étudiant.`,
@@ -44,7 +37,9 @@ async function addNewUser() {
     )
   }
 }
-const isRequired = (value) => (!value ? 'Ce champ est requis.' : true)
+const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
+const isSame = (value: any) =>
+  value != password.value ? 'Le mot de passe doit être confirmé correctement.' : true
 </script>
 
 <template>
@@ -98,7 +93,7 @@ const isRequired = (value) => (!value ? 'Ce champ est requis.' : true)
           name="confirmPassword"
           placeholder="Confirmer son mot de passe"
           v-model="confirmPassword"
-          :rules="isRequired"
+          :rules="(isRequired, isSame)"
         />
         <ErrorMessage class="text-danger" name="confirmPassword" />
       </div>
