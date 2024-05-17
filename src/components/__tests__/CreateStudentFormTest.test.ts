@@ -54,20 +54,4 @@ describe('CreateStudentForm.vue', () => {
 
     expect(wrapper.emitted()).toHaveProperty('newStudent')
   })
-
-  it("Sur envoie d'un nouveau étudiant, doit émettre un événement.", async () => {
-    const wrapper = mount(CreateStudentForm, {
-        global: {
-          plugins: [createTestingPinia({ createSpy: vi.fn })]
-        }
-      })
-
-    await wrapper.find('#password').setValue('password')
-    await wrapper.find('#confirmPassword').setValue('password')
-    await wrapper.find('#studentEmail').setValue('email@mail.com')
-    await wrapper.find('#studentName').setValue('name')
-    await wrapper.find('#submit-student').trigger('click')
-
-    expect(wrapper.emitted()).toHaveProperty('newStudent')
-  })
 })
