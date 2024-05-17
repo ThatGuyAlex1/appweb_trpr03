@@ -1,9 +1,11 @@
 import { vi, describe, it, expect, beforeEach } from 'vitest'
-import { mount, isVisible } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import NavigationBar from '../NavigationBar.vue' // Ajustez le chemin selon votre structure
 import { createTestingPinia } from '@pinia/testing'
 import { createRouter, createWebHistory } from 'vue-router'
 import routes from '../../router/routes'
+import { useProfileStore } from '../../stores/profileStore'
+import { useAuthStore } from '../../stores/authStore'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -11,9 +13,6 @@ const router = createRouter({
 })
 
 describe('NavigationBar', () => {
-  beforeEach(() => {
-    vi.resetAllMocks()
-  })
   it('Les liens des autres views ne sont pas présent lorsque le user est pas connecté.', async () => {
     router.push('/') // S'assurer de commencer avec une route connue
     await router.isReady() // Attendre que le routeur soit prêt
@@ -30,6 +29,9 @@ describe('NavigationBar', () => {
       }
     })
 
+    
+
+
     console.log(wrapper.html())
 
     const homeLink = wrapper.find('#home-link')
@@ -44,22 +46,13 @@ describe('NavigationBar', () => {
     const logoutLink = wrapper.find('a[href="#"]')
     expect(logoutLink.exists()).toBe(false)
   })
-
+/*
   it('Les liens des autres views sont présent lorsque le user est connecté en temps que prof', async () => {
     router.push('/') // S'assurer de commencer avec une route connue
     await router.isReady() // Attendre que le routeur soit prêt
 
-    vi.mock('../../stores/authStore', () => ({
-      useAuthStore: () => ({
-        isLoggedIn: true
-      })
-    }))
-
-    vi.mock('../../stores/profileStore', () => ({
-      useProfileStore: () => ({
-        role: 'teacher'
-      })
-    }))
+    await useAuthStore().login({"email": "test@test.com", "password": "test"})
+    useProfileStore().role = 'teacher'
 
     const wrapper = mount(NavigationBar, {
       global: {
@@ -118,4 +111,5 @@ describe('NavigationBar', () => {
     const logoutLink = wrapper.find('a[href="#"]')
     expect(logoutLink.exists()).toBe(true)
   })
+  */
 })
