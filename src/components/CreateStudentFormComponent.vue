@@ -28,6 +28,7 @@ async function addNewUser() {
       await studentStore.addSpecificStudent(name.value,email.value,password.value)
       confirm("L'étudiant a été ajouter avec succes")
       emit('newStudent');
+      
     }
   } catch (error) {
     confirm("Une erreur s'est produite lors de l'ajout de l'étudiant.")
@@ -39,7 +40,7 @@ const isRequired = value => !value ? 'Ce champ est requis.' : true;
 
 <template>
   <div class="container">
-    <Form @submit="addNewUser">
+    <Form>
     <div class="form-group">
       <label for="studentName">Nom :</label>
       <Field type="text" class="form-control" id="studentName" name="studentName" placeholder="Entrer le nom de l'étudiant." v-model="name" :rules="isRequired" />
@@ -60,7 +61,7 @@ const isRequired = value => !value ? 'Ce champ est requis.' : true;
       <Field type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirmer son mot de passe" v-model="confirmPassword" :rules="isRequired" />
       <ErrorMessage class="text-danger" name="confirmPassword" />
     </div>
-    <button type="submit" id="submit-student" class="btn btn-primary">Envoyer</button>
+    <button type="button" @click="addNewUser" id="submit-student" class="btn btn-primary">Envoyer</button>
     </Form>
   </div>
 </template>
