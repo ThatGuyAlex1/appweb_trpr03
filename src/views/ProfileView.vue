@@ -5,6 +5,8 @@ import { required } from '@vee-validate/rules'
 import { useProfileStore } from '../stores/profileStore'
 import type User from '../scripts/user'
 import Loading from 'vue-loading-overlay'
+import { useToast } from 'vue-toast-notification'
+import 'vue-toast-notification/dist/theme-sugar.css'
 
 defineRule('isRequired', required)
 
@@ -23,11 +25,15 @@ onMounted(async () => {
   try {
     await profileStore.getProfile()
     if (onError.value) {
-      // Utilisation d'une boîte de dialogue au lieu de 'confirm'
-      confirm("Une erreur s'est produite lors de la récupération du profil de l'utilisateur.")
+      useToast().error(`Erreur avec le service: Erreur lors de la récupération du profil`, {
+        duration: 6000
+      })
     }
   } catch (error) {
-    confirm("Erreur critique lors de l'accès au store.")
+    useToast().error(
+      `Erreur avec le service: ${(error as Error).message}. Oups, le backend a lâché !`,
+      { duration: 6000 }
+    )
   } finally {
     isLoading.value = false
   }
@@ -39,16 +45,19 @@ async function saveUserPassword() {
     user.value.email = profileStore.email
     user.value.name = profileStore.name
     if (newPassword.value != confirmPassword.value) {
-      confirm('Le nouveau mot de passe et la confirmation du mot de passe doit être identique')
+      //erreur vee-validate
+      //confirm('Le nouveau mot de passe et la confirmation du mot de passe doit être identique')
     } else {
       user.value.password = newPassword.value
-      console.log(user.value)
       await profileStore.updateProfile(user.value)
-      confirm('Mot de passe changé avec succes')
-      reloadProfile()
+      //modal
+      //confirm('Mot de passe changé avec succes')
     }
   } catch (error) {
-    confirm("Une erreur s'est produite lors de la mise a jour du profil de l'utilisateur.")
+    useToast().error(
+      `Erreur avec le service: ${(error as Error).message}. Erreur lors de la mise à jour du mot de passe.`,
+      { duration: 6000 }
+    )
   }
 }
 
@@ -57,10 +66,13 @@ async function saveUserName() {
   try {
     user.value.email = profileStore.email
     await profileStore.updateProfile(user.value)
-    confirm('Le nom a changé avec succes')
-    reloadProfile()
+    //modal
+    //confirm('Le nom a changé avec succes')
   } catch (error) {
-    confirm("Une erreur s'est produite lors de la mise a jour du profil de l'utilisateur.")
+    useToast().error(
+      `Erreur avec le service: ${(error as Error).message}. Erreur lors de la mise à jour du nom d'utilisateur.`,
+      { duration: 6000 }
+    )
   }
 }
 
