@@ -3,20 +3,35 @@ import { ref, onMounted, computed } from 'vue'
 import Loading from 'vue-loading-overlay'
 import { Field, Form, ErrorMessage, defineRule, validate } from 'vee-validate'
 import { required } from '@vee-validate/rules'
+import { useProfileStore } from '../stores/profileStore'
+import { useQuestionStore } from '../stores/questionStore'
 import CreateQuestionCategoryForm from '../components/CreateQuestionCategoryFormComponent.vue'
 import QuestionForm from '../components/QuestionFormComponent.vue'
 import QuestionList from '../components/QuestionListComponent.vue'
+import type Question from '../scripts/question'
 
-import { useProfileStore } from '../stores/profileStore'
+import { useToast } from 'vue-toast-notification'
+import 'vue-toast-notification/dist/theme-sugar.css'
+import ConfirmDeleteModal from '../components/ConfirmDeleteModal.vue'
+import NotifyDeleteModal from '../components/NotifyDeleteModal.vue'
+import CreateModal from '../components/CreateModal.vue'
 
 const profileStore = useProfileStore()
-const onError = computed(() => profileStore.onError)
-const isLoading = ref(true)
+const questionStore = useQuestionStore()
+const onError1 = computed(() => profileStore.onError)
+const isLoading = ref(false)
+
+const questions = computed(() => questionStore.questions as Question[])
+const questionToDelete = ref()
+const onError2 = computed(() => questionStore.onError)
+const triggerConfirmDeleteModal = ref(0)
+const triggerNotifyDeleteModal = ref(0)
+const triggerCreateModal = ref(0)
 
 onMounted(async () => {
   try {
     await profileStore.getProfile()
-    if (onError.value) {
+    if (onError1.value) {
       // Utilisation d'une boîte de dialogue au lieu de 'confirm'
       confirm("Une erreur s'est produite lors de la récupération du profil de l'utilisateur.")
     }
@@ -29,6 +44,64 @@ onMounted(async () => {
 
 //Meilleure syntaxe donnée par Jimmy ! Merci ;)
 const isTeacher = computed(() => profileStore.role === 'teacher')
+
+onMounted(async () => {
+  isLoading.value = true
+  try {
+    await questionStore.getQuestions()
+    if (onError2.value) {
+      useToast().error(`Erreur avec le service: Erreur lors de la récupération des questions`, {
+        duration: 6000
+      })
+    }
+  } catch (error) {
+    useToast().error(
+      `Erreur avec le service: ${(error as Error).message}. Oups, le backend a lâché !`,
+      { duration: 6000 }
+    )
+  } finally {
+    isLoading.value = false
+  }
+})
+
+async function reloadQuestions() {
+  try {
+    await questionStore.getQuestions()
+  } catch (error) {
+    useToast().error(
+      `Erreur avec le service: ${(error as Error).message}. Erreur lors du rafraîchissement des questions.`,
+      { duration: 6000 }
+    )
+  } finally {
+    isLoading.value = false
+  }
+}
+
+function askDeleteQuestion(questionId: Number) {
+  questionToDelete.value = questionId
+  triggerConfirmDeleteModal.value++
+}
+
+async function deleteQuestion() {
+  try {
+    isLoading.value = true
+    await questionStore.deleteQuestionById(questionToDelete.value)
+    triggerNotifyDeleteModal.value++
+    reloadQuestions()
+  } catch (error) {
+    useToast().error(
+      `Erreur avec le service: ${(error as Error).message}. Erreur lors de l'effacement de la question.`,
+      { duration: 6000 }
+    )
+  }
+}
+
+function handleNewQuestion() {
+  isLoading.value = true
+  reloadQuestions()
+  triggerCreateModal.value++
+}
+
 </script>
 
 <template>
@@ -46,7 +119,7 @@ const isTeacher = computed(() => profileStore.role === 'teacher')
         </p>
         <div class="row">
           <div class="col-md-7">
-            <QuestionList />
+            <QuestionList :questions="questions" :isTeacher="isTeacher" @delete-student="askDeleteQuestion" />
           </div>
 
           <div class="col-md-5">
@@ -56,6 +129,30 @@ const isTeacher = computed(() => profileStore.role === 'teacher')
         </div>
       </div>
     </div>
+
+    <!--Modal de confirmation de supression de question-->
+    <ConfirmDeleteModal
+      @onDeleteConfirmed="deleteQuestion"
+      :trigger="triggerConfirmDeleteModal"
+      title="Attention"
+      body="Voulez-vous supprimer cette question ?"
+      confirmButton="Supprimer"
+      cancelButton="Annuler"
+    />
+    <!--Modal de notification de supression de question-->
+    <NotifyDeleteModal
+      :trigger="triggerNotifyDeleteModal"
+      title="Succès !"
+      body="La question a été supprimée avec succès."
+      dismissButton="Ok"
+    />
+    <!--Modal de création de question-->
+    <CreateModal
+      :trigger="triggerCreateModal"
+      title="Succès !"
+      body="La question a été envoyer avec succès."
+      dismissButton="Ok"
+    />
     <div class="pt-5 mt-5 d-flex justify-content-center align-items-center">
       <Loading :active="isLoading" />
     </div>
