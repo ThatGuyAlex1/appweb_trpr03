@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useCategoryStore } from '@/stores/categoryStore';
 import { useQuestionStore } from '@/stores/questionStore';
 import { useAuthStore } from '@/stores/authStore';
@@ -16,7 +16,7 @@ const studentStore = useStudentStore()
 
 const questionDescription = ref('')
 const priorityLevel = ref(1)
-const questionCategory = ref('')
+const questionCategory = ref()
 
 
 const categories = computed(() => categoryStore.categories as Category[])
@@ -64,13 +64,17 @@ async function getStudentIdByUserId(user: User) {
   }
 }
 
+watch(questionCategory, (newCategory) => {
+  selectedCategoryId.value = newCategory
+})
+
 const submitForm = async () => {
-  questionStore.addQuestion({
-    studentId: studentId.value,
-    description: questionDescription.value,
-    priority: priorityLevel.value,
-    category: questionCategory.value,
-  })
+  questionStore.addQuestion(
+    parseInt(authStore.getUserId),
+    questionDescription.value,
+    priorityLevel.value,
+    questionCategory.value,
+  )
   questionDescription.value = ''
   priorityLevel.value = 1
   questionCategory.value = ''
