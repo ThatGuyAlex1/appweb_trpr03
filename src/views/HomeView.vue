@@ -119,7 +119,7 @@ function handleNewQuestion() {
         </p>
         <div class="row">
           <div class="col-md-7">
-            <QuestionList :questions="questions" :isTeacher="isTeacher" @delete-student="askDeleteQuestion" />
+            <QuestionList :questions="questions" :isTeacher="isTeacher" @delete-question="askDeleteQuestion" />
           </div>
 
           <div class="col-md-5">
