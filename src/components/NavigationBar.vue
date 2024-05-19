@@ -28,6 +28,7 @@ function logout() {
         <!-- Le ":class={...}" veut dire si la route est égal à 'Home' alors "active" de bootstrap sera ajoutée à l'attribut "class". Ce qui aura comme effet de mettre en évidence l'option du menu. -->
         <RouterLink
           class="nav-link"
+          id="home-link"
           :class="{ active: $route.name == 'Home' }"
           v-if="isLoggedIn"
           :to="{ name: 'Home' }"
@@ -38,6 +39,7 @@ function logout() {
         <!-- La page Profile n'est accessible que si l'utilisateur est connecté (v-if). Voir la propriété calculée isLoggedIn() qui retourne la valeur de la propriété isLoggedIn du store. -->
         <RouterLink
           class="nav-link"
+          id="profile-link"
           :class="{ active: $route.name == 'Profile' }"
           v-if="isLoggedIn"
           :to="{ name: 'Profile' }"
@@ -47,6 +49,7 @@ function logout() {
         <!-- La page Manager n'est accessible que si l'utilisateur connecté est un teacher (v-if). -->
         <RouterLink
           class="nav-link"
+          id="class-manager-link"
           :class="{ active: $route.name == 'classManager' }"
           v-if="isTeacher"
           :to="{ name: 'classManager' }"
