@@ -21,20 +21,21 @@
   ],
   "teachers": [
     {
-      "id": 1,
+      "id" : 1,
       "user_id": 1
     }
   ],
   "students": [
     {
-      "id": 1,
+      "id" : 1,
       "user_id": 2
     },
     {
-      "id": 2,
+      "id" : 2,
       "user_id": 3
     }
   ],
+
   "categories": [
     {
       "name": "Autres",
@@ -61,6 +62,7 @@
       "id": 6
     }
   ],
+
   "questions": [
     {
       "studentId": 1,

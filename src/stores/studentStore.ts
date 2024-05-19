@@ -27,6 +27,16 @@ export const useStudentStore = defineStore('studentStoreId', () => {
     }
   }
 
+  async function getStudentIdByUserId(userId: number) {
+    try {
+      onError.value = false
+      const student = await studentService.getStudentById(userId)
+      return student.id
+    } catch (error) {
+      onError.value = true
+    }
+  }
+
   async function deleteSpecificStudent(userId : number) {
     try {
       onError.value = false
@@ -49,6 +59,7 @@ export const useStudentStore = defineStore('studentStoreId', () => {
     students,
     onError,
     getStudents,
+    getStudentIdByUserId,
     deleteSpecificStudent,
     addSpecificStudent
   }

@@ -13,7 +13,7 @@ export const useQuestionStore = defineStore('questionStoreId', () => {
         onError.value = false
     }
 
-    async function getQuestions(question: Question) {
+    async function getQuestions() {
         try {
             onError.value = false
             const questionsId = await questionService.getAllQuestions()

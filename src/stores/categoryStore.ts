@@ -12,13 +12,14 @@ export const useCategoryStore = defineStore('categoryStoreId', () => {
         onError.value = false
     }
 
-    async function getCategory(category: Category) {
+    async function getCategories() {
         try {
             onError.value = false
             const categoriesId = await categoryService.getAllCategories()
             const categoriesTemporary: Category[] = await Promise.all(categoriesId.map(async (category: { id: number; name: string; }) => {
             return await categoryService.getCategoryById(category.id);
             }));
+        _initializeCategory(categoriesTemporary)
         } catch (error) {
             console.error(error)
         }
@@ -37,7 +38,7 @@ export const useCategoryStore = defineStore('categoryStoreId', () => {
     return { 
       categories,
       onError,
-      getCategory,
+      getCategories,
       addCategory
     }
 })
