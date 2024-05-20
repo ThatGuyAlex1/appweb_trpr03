@@ -73,22 +73,8 @@
       "studentId": 3,
       "description": "AAAAAAAAAH",
       "priorityLevel": 3,
-      "questionCategoryId": 5,
+      "questionCategoryId": 4,
       "id": 2
-    },
-    {
-      "studentId": 3,
-      "description": "AAAAAAAAAHasedvgse",
-      "priorityLevel": 4,
-      "questionCategoryId": 5,
-      "id": 3
-    },
-    {
-      "studentId": 3,
-      "description": "AAAAAAAAAH",
-      "priorityLevel": 5,
-      "questionCategoryId": 2,
-      "id": 4
     }
   ]
 }

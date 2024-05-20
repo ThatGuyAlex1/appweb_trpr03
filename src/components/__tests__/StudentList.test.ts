@@ -2,7 +2,6 @@ import { describe, expect, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import StudentList from '../StudentList.vue'
 import { createTestingPinia } from '@pinia/testing'
-import { useStudentStore } from '../../stores/studentStore'
 
 describe('StudentList.vue', () => {
 

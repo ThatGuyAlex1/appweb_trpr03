@@ -7,6 +7,12 @@
       "id": 1
     },
     {
+      "email": "mon@courriel.com",
+      "password": "$2a$10$sQ1zMa4PnFTP5w/G7TcyKOiKHNfNTewJL8MMHwvR0B50mwLPq75Bu",
+      "name": "Bruce Lee",
+      "id": 2
+    },
+    {
       "email": "new@test.com",
       "password": "$2a$10$7wppPMNkpubqtQ8GLzCd.uvYP.O.UxBHRgf4hrKARVOm6KJ56x6KK",
       "name": "Adélard Rochon",
@@ -21,15 +27,39 @@
   ],
   "students": [
     {
+      "id": 1,
+      "user_id": 2
+    },
+    {
       "id": 2,
       "user_id": 3
     }
   ],
-  "comments": [
+  "categories": [
     {
-      "userId": 1,
-      "comment": "J'ai inventé la machine à voyager dans le temps.",
+      "name": "Autres",
       "id": 1
+    },
+    {
+      "name": "Clarification de concept",
+      "id": 2
+    },
+    {
+      "name": "Problème technique",
+      "id": 3
+    },
+    {
+      "name": "Demande d'exemple",
+      "id": 4
+    },
+    {
+      "name": "Demande de précision",
+      "id": 5
+    },
+    {
+      "name": "Problème personnel",
+      "id": 6
     }
-  ]
+  ],
+  "questions": []
 }

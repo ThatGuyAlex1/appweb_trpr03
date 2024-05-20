@@ -42,7 +42,7 @@ const getStudentName = (userId: number) => {
             <td>{{ getCategoryName(question.questionCategoryId-1) }}</td>
             <td>{{ getStudentName(question.studentId) }}</td>
             <td v-if="isTeacher">
-              <button @click="emit('deleteQuestion',question.id)" class="btn btn-danger">
+              <button @click="emit('deleteQuestion',question.id)" id="delete" class="btn btn-danger">
                 Supprimer
               </button>
             </td>

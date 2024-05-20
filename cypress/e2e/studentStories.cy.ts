@@ -43,11 +43,20 @@ describe('Récits utilisateur étudiant', () => {
     })
 
     it('je peux créer une question', () => {
-        //TODO
-    })
+      cy.login(user.email, user.password)
 
-    it('je peux supprimer une question', () => {
-        //TODO
+      cy.contains(/accueil/i).click()
+
+      cy.get('input[name=questionTitle]').type("Question description")
+      cy.get('input[name=priorityLevel]').clear().type('3');
+      cy.get('select[name=questionCategory]').select('1');
+
+      cy.get('button[type=submit]').click();
+
+      cy.get('#confirmer.btn-primary').click()
+
+      cy.get('tr[id=questionList]').contains(user.name)
+      cy.get('tr[id=questionList]').contains("Question description")
     })
   })
   

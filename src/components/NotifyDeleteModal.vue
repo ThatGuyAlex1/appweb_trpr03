@@ -50,7 +50,7 @@ watch(
           {{ body }}
         </div>
         <div class="modal-footer">
-          <button name="confirmer" type="button" data-bs-dismiss="modal" class="btn btn-primary">
+          <button name="confirmer" id="confirmer" type="button" data-bs-dismiss="modal" class="btn btn-primary">
             {{ dismissButton }}
           </button>
         </div>
