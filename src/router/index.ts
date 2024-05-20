@@ -20,11 +20,11 @@ router.beforeEach((to) => {
     return {
       name: 'Home'
     }
-  } else if (to.meta.requiresTeacher && profileStore.role != 'teacher') {
+  } /*else if (to.meta.requiresTeacher && profileStore.role != 'teacher') {
     return {
       name: 'Home'
     }
-  } else {
+  }*/ else {
     return true
   }
 })
