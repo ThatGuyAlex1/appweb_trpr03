@@ -71,7 +71,7 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
 
 <template>
   <div class="container">
-    <Form>
+    <Form @submit="submitForm">
       <div class="form-group">
         <label for="questionDescription">Courte description de votre question</label>
         <Field
@@ -101,14 +101,14 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
       </div>
       <div class="form-group">
         <label for="questionCategory">Catégorie de questions</label>
-        <select v-model="questionCategory" class="form-control" id="questionCategory" name="questionCategory" :rules="isRequired">
+        <select v-model="questionCategory" class="form-control" id="questionCategory" :rules="isRequired">
           <option v-for="category in categories" :key="category.id" :value="category.id">
             {{ category.name }}
           </option>
         </select>
-        <ErrorMessage class="text-danger" name="questionCategory" />
+        <ErrorMessage class="text-danger" name="password" />
       </div>
-      <button type="submit" @click="submitForm" class="btn btn-primary">Envoyer</button>
+      <button type="submit" class="btn btn-primary">Envoyer</button>
     </Form>
   </div>
 </template>

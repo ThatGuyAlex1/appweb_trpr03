@@ -17,6 +17,11 @@ const getCategoryName = (categoryId: number) => {
   const category = props.categories!.find(category => category.id === categoryId)
   return category ? category.name : 'Catégory inconnu'
 }
+
+const getStudentName = (userId: number) => {
+  const student = props.students!.find(student => student.id === userId)
+  return student ? student.name : 'étudiant inconnu'
+}
 </script>
 
 <template>
@@ -26,6 +31,7 @@ const getCategoryName = (categoryId: number) => {
             <th scope="col">Description</th>
             <th scope="col">Priorité</th>
             <th scope="col">Catégorie</th>
+            <th scope="col">Étudiant</th>
             <th scope="col" v-if="isTeacher">Actions</th>
           </tr>
         </thead>
@@ -34,6 +40,7 @@ const getCategoryName = (categoryId: number) => {
             <td>{{ question.description }}</td>
             <td>{{ question.priorityLevel }}</td>
             <td>{{ getCategoryName(question.questionCategoryId-1) }}</td>
+            <td>{{ getStudentName(question.studentId) }}</td>
             <td v-if="isTeacher">
               <button @click="emit('deleteQuestion',question.id)" class="btn btn-danger">
                 Supprimer
