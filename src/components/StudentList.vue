@@ -16,6 +16,7 @@ const emit = defineEmits<{
             <th scope="col">Nom</th>
             <th scope="col">Courriel</th>
             <th scope="col">Actions</th>
+            <th scope="col">Vie</th>
           </tr>
         </thead>
         <tbody>
@@ -27,6 +28,7 @@ const emit = defineEmits<{
                 Supprimer
               </button>
             </td>
+            <td>{{ student.life }}</td>
           </tr>
         </tbody>
       </table>

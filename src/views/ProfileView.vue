@@ -18,6 +18,7 @@ const profileStore = useProfileStore()
 const name = computed(() => profileStore.name)
 const email = computed(() => profileStore.email)
 const role = computed(() => profileStore.role)
+const life = computed(() => profileStore.life)
 const onError = computed(() => profileStore.onError)
 const newPassword = ref('')
 const confirmPassword = ref('')
@@ -50,6 +51,7 @@ async function saveUserPassword() {
     user.value.email = profileStore.email
     user.value.name = profileStore.name
     user.value.password = newPassword.value
+    user.value.life = profileStore.life
     await profileStore.updateProfile(user.value)
     triggerPasswordModal.value++
   } catch (error) {
@@ -107,6 +109,7 @@ const isSame = (value: any) =>
         <div id="name">Nom: {{ name }}</div>
         <div id="email">Courriel: {{ email }}</div>
         <div id="role">Role: {{ role }}</div>
+        <div id="life">Vie: {{ life }}</div>
       </div>
 
       <div>

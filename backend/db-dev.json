@@ -4,37 +4,41 @@
       "email": "test@test.com",
       "password": "$2a$10$/U4TD6TdllwpkXLdBzoagepGDpOGcRFTS6VHAnYGNeCKsuhpEWmX2",
       "name": "Emmett Brown",
+      "life" : 10,
       "id": 1
     },
     {
       "email": "mon@courriel.com",
       "password": "$2a$10$sQ1zMa4PnFTP5w/G7TcyKOiKHNfNTewJL8MMHwvR0B50mwLPq75Bu",
       "name": "Bruce Lee",
+      "life" : 10,
       "id": 2
     },
     {
       "email": "new@test.com",
       "password": "$2a$10$7wppPMNkpubqtQ8GLzCd.uvYP.O.UxBHRgf4hrKARVOm6KJ56x6KK",
       "name": "Adélard Rochon",
+      "life" : 10,
       "id": 3
     }
   ],
   "teachers": [
     {
-      "id": 1,
+      "id" : 1,
       "user_id": 1
     }
   ],
   "students": [
     {
-      "id": 1,
+      "id" : 1,
       "user_id": 2
     },
     {
-      "id": 2,
+      "id" : 2,
       "user_id": 3
     }
   ],
+
   "categories": [
     {
       "name": "Autres",
@@ -61,6 +65,7 @@
       "id": 6
     }
   ],
+
   "questions": [
     {
       "studentId": 2,
@@ -68,27 +73,6 @@
       "priorityLevel": 3,
       "questionCategoryId": 2,
       "id": 1
-    },
-    {
-      "studentId": 3,
-      "description": "AAAAAAAAAH",
-      "priorityLevel": 3,
-      "questionCategoryId": 5,
-      "id": 2
-    },
-    {
-      "studentId": 3,
-      "description": "AAAAAAAAAHasedvgse",
-      "priorityLevel": 4,
-      "questionCategoryId": 5,
-      "id": 3
-    },
-    {
-      "studentId": 3,
-      "description": "AAAAAAAAAH",
-      "priorityLevel": 5,
-      "questionCategoryId": 2,
-      "id": 4
     }
   ]
 }
