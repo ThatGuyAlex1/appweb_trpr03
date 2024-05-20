@@ -53,7 +53,6 @@ describe('Récits utilisateur', () => {
     
         cy.contains(/gestionnaire/i).click()
 
-        cy.get('button[id=show-student-button]').click()
         cy.get('input[name=studentName]').type(student.name)
         cy.get('input[name=studentEmail]').type(student.email)
         cy.get('input[name=password]').type(student.password)
@@ -70,8 +69,23 @@ describe('Récits utilisateur', () => {
         //aidé de chatGPT
         cy.get('#studentList:first-child .btn-danger').click()
 
+        cy.get('#confirmer.btn-danger').click()
+
         cy.contains('#studentList', 'Bruce Lee').should('not.exist')
         cy.contains('#studentList', 'mon@courriel.com').should('not.exist')
+    })
+
+    //Nous avons mis ce test dans teacherStories parce que c'est le professeur qui peut supprimer des questions et non l'étudiant
+    it('je peux supprimer une question', () => {
+      cy.login(user.email, user.password)
+
+      cy.contains(/accueil/i).click()
+
+      cy.get('#delete.btn-danger').click()
+
+      cy.get('#confirmer.btn-danger').click()
+
+      cy.contains('#questionList', "Je n'ai pas bien compris les modals.").should('not.exist')
     })
   })
   

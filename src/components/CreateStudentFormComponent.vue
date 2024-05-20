@@ -44,6 +44,7 @@ const isSame = (value: any) =>
 
 <template>
   <div class="container">
+    <!--Nous savons que nous devrions ne pas utiliser @submit et utiliser @click mais la page resort des erreurs si je nous utilisons pas @submit-->
     <Form @submit="addNewUser">
       <div class="form-group">
         <label for="studentName">Nom :</label>

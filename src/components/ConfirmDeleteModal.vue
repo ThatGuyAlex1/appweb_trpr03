@@ -68,6 +68,7 @@ const confirm = () => {
         <div class="modal-footer">
           <button
             name="confirmer"
+            id="confirmer"
             type="button"
             data-bs-dismiss="modal"
             class="btn btn-danger"
