@@ -21,21 +21,20 @@
   ],
   "teachers": [
     {
-      "id" : 1,
+      "id": 1,
       "user_id": 1
     }
   ],
   "students": [
     {
-      "id" : 1,
+      "id": 1,
       "user_id": 2
     },
     {
-      "id" : 2,
+      "id": 2,
       "user_id": 3
     }
   ],
-
   "categories": [
     {
       "name": "Autres",
@@ -62,7 +61,6 @@
       "id": 6
     }
   ],
-
   "questions": [
     {
       "studentId": 1,
@@ -70,6 +68,62 @@
       "priorityLevel": 3,
       "questionCategoryId": 2,
       "id": 1
+    },
+    {
+      "studentId": 3,
+      "description": "Aider moi svp",
+      "priorityLevel": 2,
+      "questionCategoryId": 3,
+      "id": 2
+    },
+    {
+      "studentId": 3,
+      "description": "J'ai de la difful",
+      "priorityLevel": 4,
+      "questionCategoryId": 3,
+      "id": 3
+    },
+    {
+      "studentId": 3,
+      "description": "",
+      "priorityLevel": 1,
+      "questionCategoryId": 3,
+      "id": 4
+    },
+    {
+      "studentId": 3,
+      "description": "",
+      "priorityLevel": 1,
+      "questionCategoryId": 3,
+      "id": 5
+    },
+    {
+      "studentId": 3,
+      "description": "Aider moi svp",
+      "priorityLevel": 5,
+      "questionCategoryId": 3,
+      "id": 6
+    },
+    {
+      "studentId": 3,
+      "description": "",
+      "priorityLevel": 1,
+      "questionCategoryId": "",
+      "id": 7
+    },
+    {
+      "studentId": 3,
+      "description": "Aider moi svp",
+      "priorityLevel": 1,
+      "questionCategoryId": 4,
+      "id": 8
+    },
+    {
+      "studentId": 3,
+      "description": "aaaaaaaaaaaaaaaaaaaaaaa",
+      "priorityLevel": 3,
+      "questionCategoryId": 2,
+      "id": 9
     }
   ]
 }

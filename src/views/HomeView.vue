@@ -5,33 +5,35 @@ import { Field, Form, ErrorMessage, defineRule, validate } from 'vee-validate'
 import { required } from '@vee-validate/rules'
 import { useProfileStore } from '../stores/profileStore'
 import { useQuestionStore } from '../stores/questionStore'
-import { useCategoryStore } from '@/stores/categoryStore';
+import { useCategoryStore } from '../stores/categoryStore'
 import CreateQuestionCategoryForm from '../components/CreateQuestionCategoryFormComponent.vue'
 import QuestionForm from '../components/QuestionFormComponent.vue'
 import QuestionList from '../components/QuestionListComponent.vue'
 import type Question from '../scripts/question'
-import type Category from '@/scripts/category';
+import type User from '../scripts/user'
+import type Category from '../scripts/category'
 
 import { useToast } from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal.vue'
 import NotifyDeleteModal from '../components/NotifyDeleteModal.vue'
 import CreateModal from '../components/CreateModal.vue'
+import { useStudentStore } from '@/stores/studentStore'
 
 const profileStore = useProfileStore()
 const questionStore = useQuestionStore()
 const categoryStore = useCategoryStore()
+const studentStore = useStudentStore()
 const onError1 = computed(() => profileStore.onError)
+const onError2 = computed(() => questionStore.onError)
+const onError3 = computed(() => categoryStore.onError)
+const onError4 = computed(() => studentStore.onError)
 const isLoading = ref(false)
 
 const questions = computed(() => questionStore.questions as Question[])
+const students = computed(() => studentStore.students as User[])
 const categories = computed(() => categoryStore.categories as Category[])
 const questionToDelete = ref()
-const onError2 = computed(() => questionStore.onError)
-
-
-const onError3 = computed(() => categoryStore.onError)
-
 const triggerConfirmDeleteModal = ref(0)
 const triggerNotifyDeleteModal = ref(0)
 const triggerCreateModal = ref(0)
@@ -56,9 +58,27 @@ const isTeacher = computed(() => profileStore.role === 'teacher')
 onMounted(async () => {
   isLoading.value = true
   try {
+    await profileStore.getProfile()
     await questionStore.getQuestions()
+    await studentStore.getStudents()
+    await categoryStore.getCategories()
     if (onError2.value) {
       useToast().error(`Erreur avec le service: Erreur lors de la récupération des questions`, {
+        duration: 6000
+      })
+    }
+    if (onError1.value) {
+      useToast().error(`Erreur avec le service: Erreur lors de la récupération du profile`, {
+        duration: 6000
+      })
+    }
+    if (onError3.value) {
+      useToast().error(`Erreur avec le service: Erreur lors de la récupération des catégories`, {
+        duration: 6000
+      })
+    }
+    if (onError4.value) {
+      useToast().error(`Erreur avec le service: Erreur lors de la récupération des étudiants`, {
         duration: 6000
       })
     }
@@ -165,7 +185,7 @@ function handleNewCategory() {
         </p>
         <div class="row">
           <div class="col-md-7">
-            <QuestionList :questions="questions" :isTeacher="isTeacher" @delete-question="askDeleteQuestion" />
+            <QuestionList :questions="questions" :categories="categories" :students="students" :isTeacher="isTeacher" @delete-question="askDeleteQuestion" />
           </div>
 
           <div class="col-md-5">

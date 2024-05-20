@@ -8,6 +8,7 @@ import 'vue-toast-notification/dist/theme-sugar.css'
 
 
 defineRule('isRequired', required)
+defineRule('isSame', confirmed)
 const categoryStore = useCategoryStore()
 
 const emit = defineEmits<{
@@ -53,7 +54,7 @@ const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
         />
         <ErrorMessage class="text-danger" name="categoryName" />
       </div>
-      <button type="submit" @click="addNewCategory" id="submit-category" class="btn btn-primary">Créer la nouvelle catégorie</button>
+      <button type="submit" @submit="addNewCategory" id="submit-category" class="btn btn-primary">Créer la nouvelle catégorie</button>
     </form>
   </div>
 </template>
