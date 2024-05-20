@@ -21,21 +21,20 @@
   ],
   "teachers": [
     {
-      "id" : 1,
+      "id": 1,
       "user_id": 1
     }
   ],
   "students": [
     {
-      "id" : 1,
+      "id": 1,
       "user_id": 2
     },
     {
-      "id" : 2,
+      "id": 2,
       "user_id": 3
     }
   ],
-
   "categories": [
     {
       "name": "Autres",
@@ -62,7 +61,6 @@
       "id": 6
     }
   ],
-
   "questions": [
     {
       "studentId": 2,
@@ -70,6 +68,27 @@
       "priorityLevel": 3,
       "questionCategoryId": 2,
       "id": 1
+    },
+    {
+      "studentId": 3,
+      "description": "AAAAAAAAAH",
+      "priorityLevel": 3,
+      "questionCategoryId": 5,
+      "id": 2
+    },
+    {
+      "studentId": 3,
+      "description": "AAAAAAAAAHasedvgse",
+      "priorityLevel": 4,
+      "questionCategoryId": 5,
+      "id": 3
+    },
+    {
+      "studentId": 3,
+      "description": "AAAAAAAAAH",
+      "priorityLevel": 5,
+      "questionCategoryId": 2,
+      "id": 4
     }
   ]
 }

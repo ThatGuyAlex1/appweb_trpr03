@@ -7,8 +7,14 @@ import { useQuestionStore } from '@/stores/questionStore';
 import { useAuthStore } from '@/stores/authStore';
 import type User from '../scripts/user'
 import type Category from '@/scripts/category';
+import { useToast } from 'vue-toast-notification'
+import 'vue-toast-notification/dist/theme-sugar.css'
 
 defineRule('isRequired', required)
+
+const emit = defineEmits<{
+  (event: 'createQuestion'): void
+}>()
 
 const categoryStore = useCategoryStore()
 const questionStore = useQuestionStore()
@@ -28,11 +34,14 @@ onMounted(async () => {
   try {
     await categoryStore.getCategories()
     if (onError.value) {
-      // Utilisation d'une boîte de dialogue au lieu de 'confirm'
-      confirm("Une erreur s'est produite lors de la récupération des catégories de questions.")
+      useToast().error(`Une erreur s'est produite lors de la récupération des catégories de questions.`, {
+        duration: 6000
+      })
     }
   } catch (error) {
-    confirm("Erreur critique lors de l'accès au store des catégories.")
+    useToast().error(`Erreur critique lors de l'accès au store des catégories.`, {
+        duration: 6000
+      })
   } finally {
     isLoading.value = false
   }
@@ -40,20 +49,6 @@ onMounted(async () => {
 
 const onError = computed(() => categoryStore.onError)
 const isLoading = ref(false)
-
-onMounted(async () => {
-  isLoading.value = true
-  try {
-    if (onError.value) {
-      // Utilisation d'une boîte de dialogue au lieu de 'confirm'
-      confirm("Une erreur s'est produite lors de la récupération des étudiants.")
-    }
-  } catch (error) {
-    confirm("Erreur critique lors de l'accès au store")
-  } finally {
-    isLoading.value = false
-  }
-})
 
 const submitForm = async () => {
   questionStore.addQuestion(
@@ -65,6 +60,7 @@ const submitForm = async () => {
   questionDescription.value = ''
   priorityLevel.value = 1
   questionCategory.value = ''
+  emit('createQuestion')
 }
 const isRequired = (value: any) => (!value ? 'Ce champ est requis.' : true)
 </script>

@@ -39,20 +39,6 @@ const triggerConfirmDeleteModal = ref(0)
 const triggerNotifyDeleteModal = ref(0)
 const triggerCreateModal = ref(0)
 
-onMounted(async () => {
-  try {
-    await profileStore.getProfile()
-    if (onError1.value) {
-      // Utilisation d'une boîte de dialogue au lieu de 'confirm'
-      confirm("Une erreur s'est produite lors de la récupération du profil de l'utilisateur.")
-    }
-  } catch (error) {
-    confirm("Erreur critique lors de l'accès au store.")
-  } finally {
-    isLoading.value = false
-  }
-})
-
 //Meilleure syntaxe donnée par Jimmy ! Merci ;)
 const isTeacher = computed(() => profileStore.role === 'teacher')
 
@@ -153,7 +139,7 @@ function handleNewQuestion() {
 
           <div class="col-md-5">
             <CreateQuestionCategoryForm v-if="isTeacher" />
-            <QuestionForm v-else />
+            <QuestionForm @create-question="handleNewQuestion" v-else />
           </div>
         </div>
       </div>

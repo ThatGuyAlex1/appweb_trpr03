@@ -79,6 +79,10 @@ async function addSpecificStudent(name: string, email: string, password: string)
       `http://127.0.0.1:3000/students`,
       dataSent2
     )
+
+    console.log(dataSent2)
+
+    
   } catch (error) {
     throw parseAxiosError(error)
   }

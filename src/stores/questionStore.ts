@@ -27,6 +27,7 @@ export const useQuestionStore = defineStore('questionStoreId', () => {
           }
     }
 
+    //PROBLÈME CONNU: efface plus qu'une question mais n'efface pas toute les questions 
     async function deleteQuestionById(questionId : number) {
         try {
           onError.value = false
