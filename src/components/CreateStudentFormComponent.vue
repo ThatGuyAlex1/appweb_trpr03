@@ -44,7 +44,7 @@ const isSame = (value: any) =>
 
 <template>
   <div class="container">
-    <Form>
+    <Form @submit="addNewUser">
       <div class="form-group">
         <label for="studentName">Nom :</label>
         <Field
@@ -97,7 +97,7 @@ const isSame = (value: any) =>
         />
         <ErrorMessage class="text-danger" name="confirmPassword" />
       </div>
-      <button type="submit" @click="addNewUser" id="submit-student" class="btn btn-primary">Envoyer</button>
+      <button type="submit" id="submit-student" class="btn btn-primary">Envoyer</button>
     </Form>
   </div>
 </template>
