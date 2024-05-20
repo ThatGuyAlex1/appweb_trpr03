@@ -5,10 +5,12 @@ import { Field, Form, ErrorMessage, defineRule, validate } from 'vee-validate'
 import { required } from '@vee-validate/rules'
 import { useProfileStore } from '../stores/profileStore'
 import { useQuestionStore } from '../stores/questionStore'
+import { useCategoryStore } from '@/stores/categoryStore';
 import CreateQuestionCategoryForm from '../components/CreateQuestionCategoryFormComponent.vue'
 import QuestionForm from '../components/QuestionFormComponent.vue'
 import QuestionList from '../components/QuestionListComponent.vue'
 import type Question from '../scripts/question'
+import type Category from '@/scripts/category';
 
 import { useToast } from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
@@ -18,12 +20,18 @@ import CreateModal from '../components/CreateModal.vue'
 
 const profileStore = useProfileStore()
 const questionStore = useQuestionStore()
+const categoryStore = useCategoryStore()
 const onError1 = computed(() => profileStore.onError)
 const isLoading = ref(false)
 
 const questions = computed(() => questionStore.questions as Question[])
+const categories = computed(() => categoryStore.categories as Category[])
 const questionToDelete = ref()
 const onError2 = computed(() => questionStore.onError)
+
+
+const onError3 = computed(() => categoryStore.onError)
+
 const triggerConfirmDeleteModal = ref(0)
 const triggerNotifyDeleteModal = ref(0)
 const triggerCreateModal = ref(0)
@@ -102,6 +110,44 @@ function handleNewQuestion() {
   triggerCreateModal.value++
 }
 
+onMounted(async () => {
+  isLoading.value = true
+  try {
+    await categoryStore.getCategories()
+    if (onError3.value) {
+      useToast().error(`Erreur avec le service: Erreur lors de la récupération des catégories de questions`, {
+        duration: 6000
+      })
+    }
+  } catch (error) {
+    useToast().error(
+      `Erreur avec le service: ${(error as Error).message}. Oups, le backend a lâché !`,
+      { duration: 6000 }
+    )
+  } finally {
+    isLoading.value = false
+  }
+})
+
+async function reloadCategories() {
+  try {
+    await categoryStore.getCategories()
+  } catch (error) {
+    useToast().error(
+      `Erreur avec le service: ${(error as Error).message}. Erreur lors du rafraîchissement des catégories de questions.`,
+      { duration: 6000 }
+    )
+  } finally {
+    isLoading.value = false
+  }
+}
+
+function handleNewCategory() {
+  isLoading.value = true
+  reloadCategories()
+  triggerCreateModal.value++
+}
+
 </script>
 
 <template>
@@ -123,7 +169,7 @@ function handleNewQuestion() {
           </div>
 
           <div class="col-md-5">
-            <CreateQuestionCategoryForm v-if="isTeacher" />
+            <CreateQuestionCategoryForm v-if="isTeacher" @new-category="handleNewCategory"/>
             <QuestionForm v-else />
           </div>
         </div>
@@ -151,6 +197,13 @@ function handleNewQuestion() {
       :trigger="triggerCreateModal"
       title="Succès !"
       body="La question a été envoyer avec succès."
+      dismissButton="Ok"
+    />
+    <!--Modal de création de catégorie de question-->
+    <CreateModal
+      :trigger="triggerCreateModal"
+      title="Succès !"
+      body="La nouvelle catégorie de question a été envoyer avec succès."
       dismissButton="Ok"
     />
     <div class="pt-5 mt-5 d-flex justify-content-center align-items-center">
